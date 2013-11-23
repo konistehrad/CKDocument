@@ -45,7 +45,7 @@
 #import "CKXPathQuery.h"
 #import "CKXPathQuery_Private.h"
 
-@interface ConXPathQueryResult : NSObject
+@interface CKXPathQueryResult : NSObject
 {
     NSArray* _result;
     xmlXPathObjectPtr _objectPointer;
@@ -58,12 +58,12 @@
 @property (nonatomic, assign, readwrite) xmlXPathObjectPtr objectPointer;
 @end
 
-@implementation ConXPathQueryResult
+@implementation CKXPathQueryResult
 @synthesize result = _result;
 @synthesize objectPointer = _objectPointer;
 + (id)resultWithXPathObj:(xmlXPathObjectPtr)objectPointer withResult:(NSArray *)result
 {
-    return [[ConXPathQueryResult alloc] initWithXPathObj:objectPointer withResult:result];
+    return [[CKXPathQueryResult alloc] initWithXPathObj:objectPointer withResult:result];
 }
 - (id)initWithXPathObj:(xmlXPathObjectPtr)objectPointer withResult:(NSArray*)result
 {
@@ -173,12 +173,12 @@
         xmlXPathFreeContext(_xpathContext);
 }
 
-- (ConXPathQueryResult*)cachedResultForQuery:(NSString*)query
+- (CKXPathQueryResult*)cachedResultForQuery:(NSString*)query
 {
     return [_cache objectForKey:query];
 }
 
-- (void)cacheResult:(ConXPathQueryResult*)result forQuery:(NSString*)query
+- (void)cacheResult:(CKXPathQueryResult*)result forQuery:(NSString*)query
 {
     [_cache setObject:result forKey:query];
 }
@@ -205,7 +205,7 @@
     {
         result = [NSArray array];
     }
-    [self cacheResult:[ConXPathQueryResult resultWithXPathObj:xpathObj withResult:result] forQuery:queryString];
+    [self cacheResult:[CKXPathQueryResult resultWithXPathObj:xpathObj withResult:result] forQuery:queryString];
     return result;
 }
 
@@ -241,7 +241,7 @@
 - (NSArray*)elementsForQuery:(CKXPathQuery *)xpathQuery
 {
     NSArray* result = nil;
-    ConXPathQueryResult* cache = [self cachedResultForQuery:xpathQuery.queryString];
+    CKXPathQueryResult* cache = [self cachedResultForQuery:xpathQuery.queryString];
     if( cache != nil )
     {
         result = cache.result;
@@ -268,7 +268,7 @@
 - (NSArray*)elementsForQueryString:(NSString*)queryString
 {
     NSArray* result = nil;
-    ConXPathQueryResult* cache = [self cachedResultForQuery:queryString];
+    CKXPathQueryResult* cache = [self cachedResultForQuery:queryString];
     if( cache != nil )
     {
         result = cache.result;
